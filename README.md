@@ -1,11 +1,11 @@
-# CancelChain⛓️💥
+# CancelChain💥⛓️
 [![Language](https://img.shields.io/badge/Language-Go-blue.svg)](https://go.dev/)
 [![Documentation](https://godoc.org/github.com/mind1949/cancelchain?status.svg)](https://pkg.go.dev/github.com/mind1949/cancelchain)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mind1949/cancelchain)](https://goreportcard.com/report/github.com/mind1949/cancelchain)
 
-CancelChain 提供并发原语，轻松完成顺序关闭go协程。
+CancelChain 提供并发原语。轻松实现并发启动、顺序取消goroutine。
 
-# 使用
+# 示例
 ```golang
 package main
 
