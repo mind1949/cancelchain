@@ -3,6 +3,7 @@ package cancelchain
 
 import (
 	"context"
+	"errors"
 	"sync"
 	"sync/atomic"
 )
@@ -61,16 +62,22 @@ func (c *chain) Go(fn func(ctx context.Context) error) {
 	c.ctxChan <- nextCtx
 
 	go func() {
-		err := fn(currentCtx)
-		c.onceErr.Do(func() {
-			c.err = err
-		})
 		defer func() {
-			c.cancel()
 			<-currentCtx.Done()
 			cancel()
 			c.wg.Done()
 		}()
+
+		err := fn(currentCtx)
+		if err != nil && !errors.Is(err, context.Canceled) {
+			c.cancel()
+			c.onceErr.Do(func() {
+				c.err = err
+			})
+		}
+		if id == 0 {
+			c.cancel()
+		}
 	}()
 }
 
